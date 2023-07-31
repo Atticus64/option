@@ -2,6 +2,12 @@
 
 * Option structure inspired in Rust :crab:
 
+## Installation
+
+```bash
+go get github.com/atticus64/option
+```
+
 Example:
 
 ```go
