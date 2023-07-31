@@ -14,6 +14,12 @@ type Option[T any] struct {
 type None struct{}
 
 // Creates a new Option of type T
+// 
+// func main() {
+//   number := Optional[int]()	
+//   numberTwo := Optional[int](10)	
+// }
+// 
 func Optional[T any](initial ...T) Option[T] {
 	if len(initial) == 0 {
 		return Option[T]{None{}}
@@ -23,16 +29,28 @@ func Optional[T any](initial ...T) Option[T] {
 }
 
 // check if the current option value is None
+// if optional.IsNone() {
+//   ... something
+// }
 func (o Option[T]) IsNone() bool {
 	return o.value == None{}
 }
 
 // check if the current option value is Some
+// if optional.IsSome() {
+//   ... something
+// }
 func (o Option[T]) IsSome() bool {
 	return o.value != None{}
 }
 
 // get the current option value and if exists an error
+// func main() {
+//   value, err := optional.GetValue() 
+//   if err != nil {
+//	   ...handle error
+//   }
+// }
 func (o Option[T]) GetValue() (variable T, err error) {
 	rawValue := o.value
 
@@ -46,6 +64,11 @@ func (o Option[T]) GetValue() (variable T, err error) {
 }
 
 // get the current option value or default value passed
+//
+// func main() {
+//   value := optional.ValueOr(10)	
+//	
+// }
 func (o Option[T]) ValueOr(defaultVal T) T {
 	if o.IsSome() {
 		value := o.value.(T)
@@ -56,6 +79,12 @@ func (o Option[T]) ValueOr(defaultVal T) T {
 }
 
 // get the value or panic the program
+//
+// func main() {
+//   value := optional.Unwrap()
+//   // possible crash
+//	
+// }
 func (o Option[T]) Unwrap() T {
 	if o.IsNone() {
 		panic("option is none")
@@ -65,9 +94,8 @@ func (o Option[T]) Unwrap() T {
 }
 
 // set the current option value
-func (o Option[T]) SetValue(value Optionable) Option[T] {
+func (o *Option[T]) SetValue(value Optionable) {
 	o.value = value
-	return o
 }
 
 func getDefault[T any]() T {
