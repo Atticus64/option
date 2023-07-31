@@ -5,14 +5,23 @@
 Example:
 
 ```go
-func main() {
-	opt := Optional[string]("hello")
+package main
 
-	if opt.IsSome() {
-		value, _ := opt.GetValue()
-		fmt.Println("value:", value)
+import (
+	"fmt"
+	"github.com/atticus64/option"
+)
+
+func main() {
+	data := option.Optional[int]()
+
+	if data.IsNone() {
+		val := data.ValueOr(78)
+		fmt.Println(val)
+		fmt.Println("is none")
 	} else {
-		fmt.Println("None")
+		value, _ := data.GetValue()
+		fmt.Println(value)
 	}
 }
 ```

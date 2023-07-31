@@ -1,4 +1,4 @@
-package main
+package option
 
 import "fmt"
 
@@ -40,6 +40,15 @@ func (o Option[T]) GetValue() (variable T, err error) {
 	}
 }
 
+func (o Option[T]) ValueOr(defaultVal T) T {
+	if o.IsSome() {
+		value, _ := o.GetValue()
+		return value 
+	} else {
+		return defaultVal
+	}
+}
+
 func (o Option[T]) SetValue(value Optionable) Option[T] {
 	o.value = value
 	return o
@@ -49,3 +58,4 @@ func getDefault[T any]() T {
 	var result T
 	return result
 }
+
